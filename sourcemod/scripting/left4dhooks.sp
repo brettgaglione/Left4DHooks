@@ -1631,3 +1631,73 @@ void SetReserveAmmo(int client, int weapon, int ammo)
 		SetEntData(client, g_iOffsetAmmo + offset, ammo);
 	}
 }
+
+public Action L4D_OnGetMissionVSBossSpawning(float &spawn_pos_min, float &spawn_pos_max, float &tank_chance, float &witch_chance)
+{
+	//static int called;
+	//if( called < MAX_CALLS )
+	//{
+		//if( called == 0 ) g_iForwards++;
+		//called++;
+
+		//ForwardCalled("\"L4D_OnGetMissionVSBossSpawning\" %f. %f. %f. %f", spawn_pos_min, spawn_pos_max, tank_chance, witch_chance);
+	//}
+
+	// WORKS
+	 //spawn_pos_min = 0.3;
+	 //spawn_pos_max = 0.7;
+	 //tank_chance = 1.0;
+	 //witch_chance = 0.0;
+	 //return Plugin_Changed;
+	 
+	char sMap[64];
+	GetCurrentMap(sMap, sizeof(sMap));
+	if (StrEqual(sMap, "c8m5_rooftop", false) || StrEqual(sMap, "c10m5_houseboat", false) || StrEqual(sMap, "c11m5_runway", false) || StrEqual(sMap, "c5m5_bridge", false))
+	{    
+		tank_chance = 0.0;
+		witch_chance = 1.0;
+		
+	} else {
+		spawn_pos_min = 0.2;
+	 	spawn_pos_max = 0.7;
+		tank_chance = 1.0;
+ 		witch_chance = 0.0;
+
+		if(StrEqual(sMap, "c8m2_subway", false)){
+			spawn_pos_min = 0.2;
+			spawn_pos_max = 0.5;
+		}
+
+
+		if(StrEqual(sMap, "c8m3_sewers", false)){
+			spawn_pos_min = 0.5;
+			spawn_pos_max = 0.6;
+		}
+
+		if(StrEqual(sMap, "c8m4_interior", false)){
+			spawn_pos_min = 0.3;
+			spawn_pos_max = 0.4;
+		}
+
+		if(StrEqual(sMap, "c8m1_apartment", false)){
+			spawn_pos_min = 0.3;
+			spawn_pos_max = 0.9;
+			witch_chance = 1.0;
+		}
+
+		if(StrEqual(sMap, "c11m1_greenhouse", false)){
+			spawn_pos_min = 0.4;
+		}
+
+		if(StrEqual(sMap, "c10m1_caves", false)){
+			spawn_pos_max = 0.8;
+			spawn_pos_min = 0.5;
+		}
+
+		
+		
+	}
+
+	return Plugin_Changed;
+	//return Plugin_Continue;
+}
